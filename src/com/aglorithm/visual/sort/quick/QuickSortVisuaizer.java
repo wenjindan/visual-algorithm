@@ -25,10 +25,11 @@ public class QuickSortVisuaizer {
         });
     }
 
-    private int partition(int[] arr,int start,int end){
+    private int[] partition(int[] arr,int start,int end){
+        int x=start;
         if(end-start>1){
-            int x= (int) (Math.random()*(end-start+1))+start;
             frame.drawIndex(start,end,-1,x,-1);
+            x= (int) (Math.random()*(end-start+1))+start;
             int is=frame.arraySort[start];
             frame.arraySort[start]=frame.arraySort[x];
             frame.arraySort[x]=is;
@@ -36,21 +37,35 @@ public class QuickSortVisuaizer {
         int v = arr[start];
         frame.drawIndex(start,end,-1,start,-1);
         int j=start;
-        for (int i=start+1;i<=end;i++){
-            frame.drawIndex(start,end,-1,start,i);
-            if(arr[i]<v){
-                j++;
-                int iv=frame.arraySort[j];
-                frame.arraySort[j]=frame.arraySort[i];
-                frame.arraySort[i]=iv;
-                frame.drawIndex(start,end,-1,start,i);
+        int k=end;
+        for (int i=start+1;i<=k;i++){
+            if(arr[i]!=v){
+                if(arr[i]<v){
+                    j++;
+                    int iv=frame.arraySort[j];
+                    frame.arraySort[j]=frame.arraySort[i];
+                    frame.arraySort[i]=iv;
+                    frame.drawIndex(start,end,-1,start,i,k+1);
+                }else{
+                    int iv=frame.arraySort[k];
+                    frame.arraySort[k]=frame.arraySort[i];
+                    frame.arraySort[i]=iv;
+                    k--;
+                    i--;
+                    frame.drawIndex(start,end,-1,start,i,k+1);
+                }
             }
         }
+        k++;
+
         int iv=frame.arraySort[start];
         frame.arraySort[start]=frame.arraySort[j];
         frame.arraySort[j]=iv;
-        frame.drawIndex(start,end,j,-1,-1);
-        return j;
+        for (int i=j;i<k;i++){
+            frame.drawIndex(start,end,i,-1,-1);
+        }
+        int[] is=new int[]{j-1,k};
+        return is;
     }
 
 
@@ -63,9 +78,9 @@ public class QuickSortVisuaizer {
             return;
         }
         frame.drawIndex(start,end,-1,-1,-1);
-        int p=partition(arr,start,end);
-        sort(arr,start,p);
-        sort(arr,p+1,end);
+        int[] p=partition(arr,start,end);
+        sort(arr,start,p[0]);
+        sort(arr,p[1],end);
     }
 
     private void sort(int[] arr){

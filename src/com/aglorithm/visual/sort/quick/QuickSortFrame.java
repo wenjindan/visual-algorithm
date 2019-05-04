@@ -21,7 +21,7 @@ public class QuickSortFrame extends AigoFrame {
     //处理位置
     private int p;
     //正在处理元素
-    private int px;
+    private int px0,px1;
     //处理好的元素
     private boolean[] bs;
 
@@ -38,11 +38,17 @@ public class QuickSortFrame extends AigoFrame {
         }
     }
 
-    public void drawIndex(int start,int end,int b,int p,int px){
+    public void drawIndex(int start,int end,int b,int p,int... px){
         this.start=start;
         this.end=end;
         this.p=p;
-        this.px=px;
+        this.px0=px[0];
+        if(px.length<2){
+            this.px1=px[0];
+        }else {
+            this.px1=px[1];
+        }
+
         if(b!=-1){
             bs[b]=true;
         }
@@ -63,8 +69,11 @@ public class QuickSortFrame extends AigoFrame {
             if(x==p){
                 AigoVisHelper.setColor(g2d,Color.BLUE);
             }
-            if(x==px){
-                AigoVisHelper.setColor(g2d,Color.yellow);
+            if(px0==x){
+                AigoVisHelper.setColor(g2d,Color.YELLOW);
+            }
+            if(px1==x){
+                AigoVisHelper.setColor(g2d,Color.YELLOW);
             }
             if(bs[x]){
                 AigoVisHelper.setColor(g2d,Color.red);
