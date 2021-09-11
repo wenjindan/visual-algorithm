@@ -16,3 +16,6 @@
  ## 迷宫
  
  "深度优先遍历迷宫(递归)","深度优先遍历迷宫(栈)","广度优先遍历迷宫(队列)"
+ 
+ ## 生命游戏
+  com.aglorithm.visual.life.GameOfLifeVisualizer
